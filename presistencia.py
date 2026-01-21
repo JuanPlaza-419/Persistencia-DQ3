@@ -4,7 +4,7 @@ import os
 ARCHIVO_DB = "dq3_personajes.json"
 
 # ==================================================
-# UTILIDADES DE ARCHIVO
+# PRESISTENCIA
 # ==================================================
 def asegurar_archivo():
     if not os.path.exists(ARCHIVO_DB):
@@ -21,10 +21,6 @@ def escribir_archivo(data):
     with open(ARCHIVO_DB, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
-
-# ==================================================
-# CRUD
-# ==================================================
 def write_personaje(personaje):
     data = leer_archivo()
     data.append(personaje)
@@ -47,7 +43,7 @@ def delete_personaje(personaje_id):
 
 
 # ==================================================
-# IMPRESIÓN ESTÉTICA
+# VISUAL
 # ==================================================
 def imprimir_personaje(personaje):
     print("━━━━━━━━━━━━━━━━━━━━━━━━━━")
