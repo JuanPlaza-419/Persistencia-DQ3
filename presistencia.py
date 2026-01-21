@@ -11,11 +11,20 @@ def asegurar_archivo():
         with open(ARCHIVO_DB, "w", encoding="utf-8") as f:
             json.dump([], f, indent=4)
 
+# ==================================================
+# READ
+# ==================================================
 
 def leer_archivo():
     with open(ARCHIVO_DB, "r", encoding="utf-8") as f:
         return json.load(f)
 
+def read_all_personajes():
+    return leer_archivo()
+
+# ==================================================
+# WRITE
+# ==================================================
 
 def escribir_archivo(data):
     with open(ARCHIVO_DB, "w", encoding="utf-8") as f:
@@ -27,9 +36,9 @@ def write_personaje(personaje):
     escribir_archivo(data)
 
 
-def read_all_personajes():
-    return leer_archivo()
-
+# ==================================================
+# DELETE
+# ==================================================
 
 def delete_personaje(personaje_id):
     data = leer_archivo()
@@ -41,10 +50,33 @@ def delete_personaje(personaje_id):
     escribir_archivo(nuevo_data)
     return True
 
+# ==================================================
+# UPDATE
+# ==================================================
+def update_personaje(personaje_id, nuevos_datos):
+    data = leer_archivo()
+
+    for i, personaje in enumerate(data):
+        if personaje["id"] == personaje_id:
+            data[i].update(nuevos_datos)  # actualiza solo los campos enviados
+           
+            escribir_archivo(data)
+            return True
+    return False
 
 # ==================================================
-# VISUAL
+# CLEAR
 # ==================================================
+
+def clear_personajes():
+    """Elimina todos los personajes del JSON."""
+    escribir_archivo([])
+    print("Todos los personajes han sido eliminados.")
+
+# ==================================================
+# IMPRESION BASICA
+# ==================================================
+
 def imprimir_personaje(personaje):
     print("━━━━━━━━━━━━━━━━━━━━━━━━━━")
     print(f"Nombre : {personaje['nombre']}")
@@ -69,37 +101,51 @@ def imprimir_todos():
 # ==================================================
 # MENÚS
 # ==================================================
-def crear_personaje():
+def actualizar_personaje_menu():
+    """Actualiza un personaje pidiendo datos al usuario."""
     try:
-        personaje = {
-            "id": int(input("ID del personaje: ")),
-            "nombre": input("Nombre: "),
-            "clase": input("Clase: "),
-            "nivel": int(input("Nivel: ")),
-            "estadisticas": {
-                "fuerza": int(input("Fuerza: ")),
-                "agilidad": int(input("Agilidad: ")),
-                "resiliencia": int(input("Resiliencia: ")),
-                "sabiduria": int(input("Sabiduría: ")),
-                "suerte": int(input("Suerte: "))
-            }
-        }
-        write_personaje(personaje)
-        print("Personaje añadido correctamente")
+        personaje_id = int(input("ID del personaje a actualizar: "))
+        data = read_all_personajes()
+        personaje = next((p for p in data if p["id"] == personaje_id), None)
 
-    except ValueError:
-        print("Error: introduce números donde corresponda")
-
-
-def eliminar_personaje_menu():
-    try:
-        personaje_id = int(input("ID del personaje a eliminar: "))
-        if delete_personaje(personaje_id):
-            print("Personaje eliminado correctamente")
-        else:
+        if not personaje:
             print("No existe un personaje con ese ID")
+            return
+
+        print("Qué quieres actualizar:")
+        print("1️ Nombre")
+        print("2️ Clase")
+        print("3️ Nivel")
+        print("4️ Estadísticas")
+        opcion = input("Opción: ")
+
+        nuevos_datos = {}
+
+        if opcion == "1":
+            nuevos_datos["nombre"] = input("Nuevo nombre: ")
+        elif opcion == "2":
+            nuevos_datos["clase"] = input("Nueva clase: ")
+        elif opcion == "3":
+            nuevos_datos["nivel"] = int(input("Nuevo nivel: "))
+        elif opcion == "4":
+
+            estadisticas = personaje["estadisticas"]
+            for stat in estadisticas:
+                nuevo_valor = input(f"{stat.capitalize()} ({estadisticas[stat]}): ")
+                if nuevo_valor.strip() != "":
+                    estadisticas[stat] = int(nuevo_valor)
+            nuevos_datos["estadisticas"] = estadisticas
+        else:
+            print("Opción no válida")
+            return
+
+        if update_personaje(personaje_id, nuevos_datos):
+            print("Personaje actualizado correctamente")
+        else:
+            print("Error al actualizar")
+
     except ValueError:
-        print("El ID debe ser un número")
+        print("Introduce números válidos donde corresponda")
 
 
 def menu():
@@ -107,31 +153,37 @@ def menu():
         print("\nDRAGON QUEST III - GESTIÓN DE PERSONAJES")
         print("1️ Ver personajes")
         print("2️ Añadir personaje")
-        print("3️ Eliminar personaje")
-        print("4️ Salir")
+        print("3️ Actualizar personaje")
+        print("4️ Eliminar personaje")
+        print("5️ Borrar todos los personajes")
+        print("6️ Salir")
 
         opcion = input("Elige una opción: ")
 
         if opcion == "1":
             imprimir_todos()
-
         elif opcion == "2":
             crear_personaje()
-
         elif opcion == "3":
-            eliminar_personaje_menu()
-
+            actualizar_personaje_menu()
         elif opcion == "4":
+            eliminar_personaje_menu()
+        elif opcion == "5":
+            confirm = input("Esto eliminará todo, ¿seguro? (s/n): ")
+            if confirm.lower() == "s":
+                clear_personajes()
+            else:
+                print("Cancelado")
+        elif opcion == "6":
             print("¡Hasta la próxima!")
             break
-
         else:
             print("Opción no válida")
-
 
 # ==================================================
 # PROGRAMA PRINCIPAL
 # ==================================================
+
 if __name__ == "__main__":
     asegurar_archivo()
     menu()
