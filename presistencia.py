@@ -58,7 +58,7 @@ def update_personaje(personaje_id, nuevos_datos):
 
     for i, personaje in enumerate(data):
         if personaje["id"] == personaje_id:
-            data[i].update(nuevos_datos)  # actualiza solo los campos enviados
+            data[i].update(nuevos_datos)
            
             escribir_archivo(data)
             return True
@@ -69,7 +69,7 @@ def update_personaje(personaje_id, nuevos_datos):
 # ==================================================
 
 def clear_personajes():
-    """Elimina todos los personajes del JSON."""
+
     escribir_archivo([])
     print("Todos los personajes han sido eliminados.")
 
@@ -102,7 +102,7 @@ def imprimir_todos():
 # MENÚS
 # ==================================================
 def actualizar_personaje_menu():
-    """Actualiza un personaje pidiendo datos al usuario."""
+
     try:
         personaje_id = int(input("ID del personaje a actualizar: "))
         data = read_all_personajes()
