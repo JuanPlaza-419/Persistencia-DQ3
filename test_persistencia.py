@@ -10,7 +10,7 @@ def test_write_and_read():
     # Lee el contenido del archivo
 
     # Verifica que los datos leídos sean iguales a los escritos
-
+pass
 
 # ==================================================
 # Test 2º Write sobrescribe el contenido anterior
@@ -22,6 +22,7 @@ def test_write_overwrites():
     # Escribe un nuevo contenido
 
     # Verifica que el contenido anterior haya sido sobrescrito
+pass
 
 # ==================================================
 # Test 3º Update agrega una nueva clave
@@ -33,6 +34,7 @@ def test_update_adds_key():
     # Agrega una nueva clave con update
 
     # Verifica que la clave se haya añadido correctamente
+pass
 
 # ==================================================
 # Test 4º Update modifica una clave existente
@@ -44,6 +46,7 @@ def test_update_updates_value():
     # Actualiza el valor de la clave existente
 
     # Verifica que el valor haya sido actualizado
+pass
 
 # ==================================================
 # Test 5º Update guarda valores de tipo lista
@@ -55,6 +58,7 @@ def test_update_list_value():
     # Guarda una lista como valor
 
     # Verifica que la lista se haya guardado correctamente
+pass
 
 # ==================================================
 # Test 6º Clear deja el archivo vacío
@@ -66,6 +70,7 @@ def test_clear():
     # Limpia el contenido del archivo
 
     # Verifica que el archivo esté vacío
+pass
 
 # ==================================================
 # Test 7º Clear no borra el archivo
@@ -77,6 +82,7 @@ def test_clear_does_not_delete_file():
     # Limpia el contenido
 
     # Verifica que el archivo siga existiendo
+pass
 
 # ==================================================
 # Test 8º Delete elimina el archivo
@@ -88,7 +94,7 @@ def test_delete_removes_file():
     # Elimina el archivo
 
     # Verifica que el archivo ya no existe
-
+pass
 
 # ==================================================
 # Test 9º Write crea el archivo si no existe
@@ -100,7 +106,7 @@ def test_write_creates_file():
     # Escribe datos en el archivo
 
     # Verifica que el archivo fue creado
-
+pass
 
 # ==================================================
 # Test 10º Read no modifica el archivo
@@ -112,3 +118,4 @@ def test_read_does_not_change_file():
     # Lee el archivo (solo lectura)
 
     # Verifica que el contenido sigue siendo el mismo
+pass
