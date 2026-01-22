@@ -6,11 +6,13 @@ import os
 # ==================================================
 def test_write_and_read():
     # Escribe un diccionario en el archivo JSON
+    write("test.json", {"TronchaMula": 1})
 
     # Lee el contenido del archivo
+    data = read("test.json")
 
     # Verifica que los datos leídos sean iguales a los escritos
-pass
+    assert data == {"TronchaMula": 1}
 
 # ==================================================
 # Test 2º Write sobrescribe el contenido anterior
@@ -18,23 +20,27 @@ pass
 # ==================================================
 def test_write_overwrites():
     # Escribe un primer contenido
+    write("test.json", {"a": 1})
 
     # Escribe un nuevo contenido
+    write("test.json", {"b": 2})
 
     # Verifica que el contenido anterior haya sido sobrescrito
-pass
+    assert read("test.json") == {"b": 2}
 
 # ==================================================
 # Test 3º Update agrega una nueva clave
 # Comprueba que update puede añadir una clave nueva
 # ==================================================
 def test_update_adds_key():
-    # Inicializa el archivo vacío
+    # Inicializa el archivo
+    write("test.json", {})
 
     # Agrega una nueva clave con update
+    update("test.json", "a", 5)
 
     # Verifica que la clave se haya añadido correctamente
-pass
+    assert read("test.json") == {"a": 5}
 
 # ==================================================
 # Test 4º Update modifica una clave existente
